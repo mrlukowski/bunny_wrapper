@@ -22,6 +22,8 @@ q = ch.queue("examplequeue", :durable => true)
 x = ch.direct("example.exchange", :durable => true)
 q.bind(x, :routing_key => "process")
 
+##example publisher just for sending  cople messagess
+
 for key in [1, 2, 3, 4, 5, 6]
   information_message = "{\"email#{key}\": \"example@mail.com\",\"name\": \"name\",\"size\": \"size\"}"
   x.publish(information_message,

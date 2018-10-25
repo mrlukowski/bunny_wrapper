@@ -24,15 +24,17 @@ consumer = Thread.new do
   q = ch.queue("examplequeue", :durable => true)
   consumer_queued = true
   q.subscribe do |delivery_info, properties, payload|
-    puts " otrzymano: #{payload}, routing key is #{delivery_info.routing_key}"
+    puts " received: #{payload}, routing key is #{delivery_info.routing_key}"
     $stdout.flush
-    spawn "cd /home/marek/Workspace/pgadwords; php bin/console report:newQualityScore --no-cache "
+    ## here you can  exec a multiple thread  commands in php example
+    spawn "cd /home/account/workspace; php bin/console mycommand:symfonyExample --parameters "
   end
 
   sleep 10 while !quit
   ch.close
   puts "consumer done"
 end
+## time is for example
 sleep 20 while !consumer_queued
 quit = true
 consumer.join
